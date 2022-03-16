@@ -4,7 +4,7 @@
 
 Name:       uavs3d
 Summary:    AVS3 decoder library
-Version:    1.2
+Version:    1.2.0
 Release:    1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
@@ -85,5 +85,5 @@ install -p -m 755 -D %{__cmake3_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3d
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Wed Mar 16 2022 Simone Caronni <negativo17@gmail.com> - 1.2-1.20220301git7b1dd73
+* Wed Mar 16 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-1.20220301git7b1dd73
 - First build.
