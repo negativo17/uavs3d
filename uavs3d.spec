@@ -12,7 +12,11 @@ URL:        https://github.com/uavs3/uavs3d
 Source0:    https://github.com/uavs3/uavs3d/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0:     %{name}-soname.patch
 
-BuildRequires:  cmake
+%if 0%{?fedora} || 0%{?rhel} >= 8
+BuildRequires:  cmake >= 3.5
+%else
+BuildRequires:  cmake3 >= 3.5
+%endif
 BuildRequires:  gcc-c++
 BuildRequires:  git
 
@@ -40,6 +44,7 @@ applications that use %{name}.
 sed -i '/libdir/ s/"lib"/"%{_lib}"/' source/CMakeLists.txt
 
 %build
+%if 0%{?fedora} || 0%{?rhel} >= 8
 %cmake \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
     -DCMAKE_SKIP_RPATH:BOOL=YES
@@ -48,8 +53,20 @@ sed -i '/libdir/ s/"lib"/"%{_lib}"/' source/CMakeLists.txt
 
 %install
 %cmake_install
-
 install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3dec
+
+%else
+%cmake3 \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
+    -DCMAKE_SKIP_RPATH:BOOL=YES
+
+%cmake3_build
+
+%install
+%cmake3_install
+install -p -m 755 -D %{__cmake3_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3dec
+
+%endif
 
 %ldconfig_scriptlets libs
 
