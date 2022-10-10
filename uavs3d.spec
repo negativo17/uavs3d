@@ -5,18 +5,14 @@
 Name:       uavs3d
 Summary:    AVS3 decoder library
 Version:    1.2.0
-Release:    1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:    2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
 
 Source0:    https://github.com/uavs3/uavs3d/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0:     %{name}-soname.patch
 
-%if 0%{?fedora} || 0%{?rhel} >= 8
-BuildRequires:  cmake >= 3.5
-%else
 BuildRequires:  cmake3 >= 3.5
-%endif
 BuildRequires:  gcc-c++
 BuildRequires:  git
 
@@ -44,18 +40,6 @@ applications that use %{name}.
 sed -i '/libdir/ s/"lib"/"%{_lib}"/' source/CMakeLists.txt
 
 %build
-%if 0%{?fedora} || 0%{?rhel} >= 8
-%cmake \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
-    -DCMAKE_SKIP_RPATH:BOOL=YES
-
-%cmake_build
-
-%install
-%cmake_install
-install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3dec
-
-%else
 %cmake3 \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
     -DCMAKE_SKIP_RPATH:BOOL=YES
@@ -65,8 +49,6 @@ install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3de
 %install
 %cmake3_install
 install -p -m 755 -D %{__cmake3_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3dec
-
-%endif
 
 %ldconfig_scriptlets libs
 
@@ -85,5 +67,8 @@ install -p -m 755 -D %{__cmake3_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3d
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Oct 10 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-2.20220301git7b1dd73
+- Use different branches for SPEC file variations.
+
 * Wed Mar 16 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-1.20220301git7b1dd73
 - First build.
