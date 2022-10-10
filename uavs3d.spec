@@ -1,11 +1,11 @@
-%global commit0 7b1dd734c926a23f8134b42dbfaac4d22cd6ba1d
+%global commit0 0133ee4b4bbbef7b88802e7ad019b14b9b852c2b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20220301
+%global date 20220911
 
 Name:       uavs3d
 Summary:    AVS3 decoder library
 Version:    1.2.0
-Release:    2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:    3%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
 
@@ -42,7 +42,8 @@ sed -i '/libdir/ s/"lib"/"%{_lib}"/' source/CMakeLists.txt
 %build
 %cmake \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
-    -DCMAKE_SKIP_RPATH:BOOL=YES
+    -DCMAKE_SKIP_RPATH:BOOL=YES \
+    -DCOMPILE_10BIT:BOOL=ON
 
 %cmake_build
 
@@ -65,6 +66,9 @@ install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3de
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Oct 10 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-3.20220911git0133ee4
+- Update to latest snapshot, enable 10 bit streams decoding support.
+
 * Mon Oct 10 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-2.20220301git7b1dd73
 - Use different branches for SPEC file variations.
 
