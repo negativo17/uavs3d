@@ -1,11 +1,11 @@
-%global commit0 0133ee4b4bbbef7b88802e7ad019b14b9b852c2b
+%global commit0 1fd04917cff50fac72ae23e45f82ca6fd9130bd8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20220911
+%global date 20230223
 
 Name:       uavs3d
 Summary:    AVS3 decoder library
 Version:    1.2.0
-Release:    3%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:    4%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
 
@@ -68,6 +68,9 @@ install -p -m 755 -D %{__cmake3_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3d
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Mar 11 2023 Simone Caronni <negativo17@gmail.com> - 1.2.0-4.20230223git1fd0491
+- Update to latest snapshot.
+
 * Mon Oct 10 2022 Simone Caronni <negativo17@gmail.com> - 1.2.0-3.20220911git0133ee4
 - Update to latest snapshot, enable 10 bit streams decoding support.
 
