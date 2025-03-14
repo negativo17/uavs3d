@@ -1,15 +1,15 @@
-%global commit0 1fd04917cff50fac72ae23e45f82ca6fd9130bd8
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commit 1fd04917cff50fac72ae23e45f82ca6fd9130bd8
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global date 20230223
 
 Name:       uavs3d
 Summary:    AVS3 decoder library
-Version:    1.2.0
-Release:    4%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Version:    1.2.0~%{date}git%{shortcommit}
+Release:    5%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
 
-Source0:    https://github.com/uavs3/uavs3d/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source0:    %{url}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit}.tar.gz
 Patch0:     %{name}-soname.patch
 
 BuildRequires:  cmake >= 3.5
@@ -36,7 +36,7 @@ The %{name}-devel package contains libraries and header files for developing
 applications that use %{name}.
 
 %prep
-%autosetup -p1 -n %{name}-%{commit0}
+%autosetup -p1 -n %{name}-%{commit}
 sed -i '/libdir/ s/"lib"/"%{_lib}"/' source/CMakeLists.txt
 
 %build
@@ -58,7 +58,7 @@ install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3de
 %license COPYING
 %doc README.md
 %{_libdir}/libuavs3d.so.1
-%{_libdir}/libuavs3d.so.%{version}
+%{_libdir}/libuavs3d.so.1.2.0
 
 %files devel
 %{_includedir}/%{name}.h
@@ -66,6 +66,9 @@ install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3de
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Mar 14 2025 Simone Caronni <negativo17@gmail.com> - 1.2.0~20230223git1fd0491-5
+- Convert to packaging guidelines for snapshots.
+
 * Sat Mar 11 2023 Simone Caronni <negativo17@gmail.com> - 1.2.0-4.20230223git1fd0491
 - Update to latest snapshot.
 
