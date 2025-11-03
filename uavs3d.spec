@@ -5,12 +5,13 @@
 Name:       uavs3d
 Summary:    AVS3 decoder library
 Version:    1.2.0~%{date}git%{shortcommit}
-Release:    5%{?dist}
+Release:    6%{?dist}
 License:    BSD
 URL:        https://github.com/uavs3/uavs3d
 
 Source0:    %{url}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit}.tar.gz
 Patch0:     %{name}-soname.patch
+Patch1:     %{name}-i386.patch
 
 BuildRequires:  cmake >= 3.5
 BuildRequires:  gcc-c++
@@ -66,6 +67,9 @@ install -p -m 755 -D %{__cmake_builddir}/uavs3dec %{buildroot}%{_bindir}/uavs3de
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Nov 03 2025 Simone Caronni <negativo17@gmail.com> - 1.2.0~20230223git1fd0491-6
+- Fix i686 build.
+
 * Fri Mar 14 2025 Simone Caronni <negativo17@gmail.com> - 1.2.0~20230223git1fd0491-5
 - Convert to packaging guidelines for snapshots.
 
